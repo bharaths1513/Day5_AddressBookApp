@@ -14,6 +14,10 @@ public class AddressBookData {
 		this.ZipCode = ZipCode;
 	}
 
+	public AddressBookData() {
+		
+	}
+
 	public int getSlno() {
 		return Slno;
 	}
