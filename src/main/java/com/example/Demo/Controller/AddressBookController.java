@@ -11,50 +11,59 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.Demo.DTO.AddressBookDTO;
+
+import com.example.Demo.DTO.ResponseDTO;
+import com.example.Demo.model.AddressBookData;
 
 @RestController
 @RequestMapping("/Address")
 public class AddressBookController {
 
 	/**
-	 * Adding Address with Name,City and ZipCode
-	 * @param AddressBookDTO 
-	 * @return : message and Data
+	 * Adding Address with Slno,Name,City And Zipcode 
+	 * @param addressdata
+	 * @return : in ResponseDTO, Message and data
 	 */
+
 	@PostMapping("/Add")
-	public ResponseEntity<String> AddAddress(@RequestBody AddressBookDTO addressDTO){
-		return new ResponseEntity<String>("Created Employee Payroll Data for: "+ addressDTO, HttpStatus.OK);
+	public ResponseEntity<ResponseDTO> AddAddress(@RequestBody AddressBookData addressdata){
+		ResponseDTO respDTO = new ResponseDTO("Created Address ",addressdata);
+		return new ResponseEntity<ResponseDTO>(respDTO,HttpStatus.OK);
 	}
 	
 	/**
-	 * Finding Address with zipcode
-	 * @param zip
-	 * @return : message and Zipcode
+	 * Finding Address With Slno
+	 * @param Slno
+	 * @return : in ResponseDTO, Message and data - Slno
 	 */
-	@GetMapping("/get/{zip}")
-	public ResponseEntity<String> GetAddressByZipCode(@PathVariable("zip") int zipcode){
-		return new ResponseEntity<String>("Get Call Success for Id: "+ zipcode, HttpStatus.OK);
+	
+	@GetMapping("/Find/{Slno}")
+	public ResponseEntity<ResponseDTO> GetEmployeeData(@PathVariable int Slno){
+		ResponseDTO respDTO = new ResponseDTO("Address Found ",Slno);
+		return new ResponseEntity<ResponseDTO>(respDTO,HttpStatus.OK);
 	}
 	
-	
 	/**
-	 * Editing Address by ZipCode
-	 * @param addressDTO
-	 * @return : Updated Address Details
+	 * Updating Address 
+	 * @param addressdata
+	 * @return : Updated Address
 	 */
+	
 	@PutMapping("/Edit")
-	public ResponseEntity<String> updateAddress(@RequestBody AddressBookDTO addressDTO){
-		return new ResponseEntity<String>("Updated Employee Payroll Data for: "+ addressDTO, HttpStatus.OK);
+	public ResponseEntity<ResponseDTO> EditEmployeeData(@RequestBody AddressBookData addressdata){
+		ResponseDTO respDTO = new ResponseDTO("Address Updated Successfully",addressdata);
+		return new ResponseEntity<ResponseDTO>(respDTO,HttpStatus.OK);
 	}
 	
 	/**
-	 * Deleteing Address with zipcode
-	 * @param zip
-	 * @return : Message With Deleted zipcode
+	 * Deleting Address With Slno
+	 * @param Slno
+	 * @return : Message and Deleted Slno
 	 */
-	@DeleteMapping("/delete/{zip}")
-	public ResponseEntity<String> DeleteAddress(@PathVariable("zip") int zip){
-		return new ResponseEntity<String>("Delete call success for id: "+ zip, HttpStatus.OK);
+	
+	@DeleteMapping("/Delete/{Slno}")
+	public ResponseEntity<ResponseDTO> DeleteEmployeData(@PathVariable int Slno){
+		ResponseDTO respDTO = new ResponseDTO("Address Deleted Successfully","Deleted Id:"+Slno);
+		return new ResponseEntity<ResponseDTO>(respDTO,HttpStatus.OK);
 	}
 }
